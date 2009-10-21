@@ -1,10 +1,12 @@
 from distutils.core import setup
-import interwibble
+
+interwibble_dict = {}
+execfile('interwibble', interwibble_dict)
 
 setup(
     name         = 'interwibble',
-    version      = interwibble.VERSION,
-    description  = interwibble.__doc__,
+    version      = interwibble_dict['VERSION'],
+    description  = interwibble_dict['__doc__'],
     author       = 'Eitan Isaacson',
     author_email = 'eitan@monotonous.org',
     url          = 'http://monotonous.org/',
