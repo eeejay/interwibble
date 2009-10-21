@@ -9,7 +9,7 @@ setup(
     description  = interwibble_dict['__doc__'],
     author       = 'Eitan Isaacson',
     author_email = 'eitan@monotonous.org',
-    url          = 'http://monotonous.org/',
+    url          = 'http://monotonous.org/2009/10/21/what-i-did-today-before-9-am/',
     license      = 'GPL',
     classifiers  = ['Development Status :: 3 - Alpha',
                     'Environment :: Console',
