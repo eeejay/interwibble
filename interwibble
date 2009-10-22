@@ -27,6 +27,8 @@ VERSION = '0.1'
 class UrlPrinter(object):
     def __init__(self, verbose=True):
         self._webview = webkit.WebView()
+        webkit_settings = self._webview.get_settings()
+        webkit_settings.set_property('enable-plugins', False)
         self._webview.connect('load-error', self._load_error_cb)
         self._verbose = verbose
 
