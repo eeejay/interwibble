@@ -78,6 +78,7 @@ class UrlPrinter(object):
 if __name__ == "__main__":
     from optparse import OptionParser
     from urllib import quote_plus
+    from urlparse import urljoin
 
     gtk.gdk.threads_init()
 
@@ -95,6 +96,12 @@ if __name__ == "__main__":
     if len(args) < 2:
         args.append(quote_plus(args[0])+'.pdf')
 
+    url, outfile = args[:2]
+
+    if os.path.exists(url):
+        # It's a local file.
+        url = urljoin('file://', os.path.abspath(url))
+
     url_printer = UrlPrinter(options.verbose)
     
-    url_printer.print_url(args[0], args[1])
+    url_printer.print_url(url, outfile)
