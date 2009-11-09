@@ -31,6 +31,7 @@ class UrlPrinter(object):
         webkit_settings.set_property('enable-plugins', False)
         self._webview.connect('load-error', self._load_error_cb)
         self._verbose = verbose
+        self._loop = glib.MainLoop()
 
     def print_url(self, url, outfile):
         self._webview.open(url)
@@ -41,7 +42,7 @@ class UrlPrinter(object):
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            gtk.main()
+            self._loop.run()
 
         self._webview.disconnect(handler)
 
@@ -55,15 +56,15 @@ class UrlPrinter(object):
             frame.print_full(print_op, gtk.PRINT_OPERATION_ACTION_EXPORT)
         except glib.GError, e:
             self._print_error(e.message+'\n')
-            gtk.main_quit()
+            self._loop.quit()
 
     def _load_error_cb(self, view, frame, url, gp):
         self._print_error("Error loading %s\n" % url)
-        gtk.main_quit()
+        self._loop.quit()
     
     def _end_print_cb(self, *args):
         self._print_status('Done.\n')
-        gtk.main_quit()
+        self._loop.quit()
 
     def _print_error(self, status):
         sys.stderr.write(status)
@@ -77,6 +78,9 @@ class UrlPrinter(object):
 if __name__ == "__main__":
     from optparse import OptionParser
     from urllib import quote_plus
+
+    gtk.gdk.threads_init()
+
     parser = OptionParser(usage="usage: %prog [options] URL [outfile]",
                           version="%prog "+VERSION)
     parser.add_option("-q", "--quiet",
