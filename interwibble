@@ -51,8 +51,11 @@ class UrlPrinter(object):
 
         self._print_status('Loading URL... ')
 
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
+        if hasattr(warnings, 'catch_warnings'):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                self._loop.run()
+        else:
             self._loop.run()
 
         self._webview.disconnect(handler)
