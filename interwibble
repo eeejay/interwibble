@@ -17,6 +17,9 @@
 
 '''A non-interactive tool for converting any given website to PDF'''
 
+# For Python 2.5 compatability.
+from __future__ import with_statement
+
 import webkit, gtk, glib
 import warnings
 import sys
